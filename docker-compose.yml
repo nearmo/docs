@@ -3,12 +3,23 @@ services:
   docs:
     build: .
     image: redbrick/docs
-    ports:
-      - "8000:8000"
+    networks:
+      - web
     volumes:
-      -  $PWD:/usr/src/app
+      -  /usr/src/app
+    labels:
+    - "traefik.backend=docs"
+    - "traefik.docker.network=web"
+    - "traefik.frontend.rule=Host:docs.redbrick.dcu.ie"
+    - "traefik.enable=true"
+    - "traefik.port=8000"
+
   test:
     image: 18fgsa/html-proofer
     command: site --allow-hash-href --check-html --empty-alt-ignore --disable-external
     volumes:
-      -  $PWD/site:/site
+      -  /site:/site
+
+networks:
+  web:
+    external: true
