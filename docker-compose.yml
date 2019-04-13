@@ -2,11 +2,10 @@ version: "3"
 services:
   docs:
     build: .
-    image: redbrick/docs
     networks:
       - web
     volumes:
-      -  /usr/src/app
+      -  .:/usr/src/app
     labels:
     - "traefik.backend=docs"
     - "traefik.docker.network=web"
