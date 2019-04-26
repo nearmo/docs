@@ -6,6 +6,13 @@ services:
       - web
     volumes:
       -  .:/usr/src/app
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://192.168.144.251:6514"
+        syslog-format: rfc5424micro
+        tag: docs
+
     labels:
     - "traefik.backend=docs"
     - "traefik.docker.network=web"
